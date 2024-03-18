@@ -4,7 +4,6 @@ import axios from "axios";
 
 const Login = () => {
   const [userData, setUserData] = useState({
-    userName: "",
     userPassword: "",
     userEmail: "",
   });
@@ -45,11 +44,6 @@ const Login = () => {
   const validate = (values) => {
     const errors = {};
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!values.userName) {
-      errors.username = "Username is required!";
-    } else if (/\s/.test(values.userName)) {
-      errors.username = "Username cannot contain spaces!";
-    }
     if (!values.userEmail) {
       errors.email = "Email is required!";
     } else if (!regex.test(values.userEmail)) {
@@ -84,7 +78,7 @@ const Login = () => {
           />
           <p>{formErrors.password}</p>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Sign In</button>
       </form>
     </Container>
   );
@@ -161,8 +155,7 @@ const Container = styled.div`
       }
 
       &[type="email"],
-      &[type="password"],
-      &[type="text"] {
+      &[type="password"] {
         &:focus {
           background: rgba(0, 0, 0, 0.6);
           box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
@@ -170,7 +163,6 @@ const Container = styled.div`
       }
     }
 
-    .userName,
     .userPassword,
     .userEmail {
       position: relative;

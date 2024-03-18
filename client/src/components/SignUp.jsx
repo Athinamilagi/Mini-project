@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-const Login = () => {
+const SignUp = () => {
   const [userData, setUserData] = useState({
     userName: "",
     userPassword: "",
@@ -22,7 +22,7 @@ const Login = () => {
     setFormErrors(validate(userData));
     console.log("Sending request with:", userData);
     axios
-      .post("http://localhost:3000/login", {
+      .post("http://localhost:3000/signup", {
         userName: userData.userName,
         userEmail: userData.userEmail,
         userPassword: userData.userPassword,
@@ -93,13 +93,13 @@ const Login = () => {
           />
           <p>{formErrors.password}</p>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Sign Up</button>
       </form>
     </Container>
   );
 };
 
-export default Login;
+export default SignUp;
 
 const Container = styled.div`
   position: relative;
