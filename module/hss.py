@@ -22,7 +22,7 @@ def compare_images(image1, image2):
     return mse
 
 # Path to the folder containing the reference image
-reference_image_path = './IMG-20211119-WA0097.jpg'
+reference_image_path = './captured_frame.jpg'
 
 # Load the reference image
 reference_image = load_image(reference_image_path)
