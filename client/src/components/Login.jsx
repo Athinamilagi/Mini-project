@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
@@ -79,6 +80,9 @@ const Login = () => {
           <p>{formErrors.password}</p>
         </div>
         <button type="submit">Sign In</button>
+        <div className="Link">
+          Are U new around ? <Link to="/signup">Go here</Link>.
+        </div>
       </form>
     </Container>
   );
@@ -206,6 +210,12 @@ const Container = styled.div`
       &:active {
         background: rgba(255, 255, 255, 0.2);
       }
+    }
+    .Link {
+      font-size: 16px;
+      font-weight: 500;
+      color:blue;
+      color: #333;
     }
   }
   @media (max-width: 428px) {

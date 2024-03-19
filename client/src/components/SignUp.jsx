@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import axios from "axios";
+
 
 const SignUp = () => {
   const [userData, setUserData] = useState({
@@ -36,7 +38,6 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(userData);
     }
@@ -58,7 +59,7 @@ const SignUp = () => {
     if (!values.userPassword) {
       errors.password = "Password is required";
     } else if (values.userPassword.length < 16) {
-      errors.userPassword = "Password must be more than 16 characters";
+      errors.password = "Password must be more than 16 characters";
     }
     return errors;
   };
@@ -94,6 +95,9 @@ const SignUp = () => {
           <p>{formErrors.password}</p>
         </div>
         <button type="submit">Sign Up</button>
+        <div className="Link">
+          Already a user? <Link to="/login">Go here</Link>.
+        </div>
       </form>
     </Container>
   );
@@ -138,7 +142,7 @@ const Container = styled.div`
       font-weight: 500;
       color: #fff;
       opacity: 0.7;
-      font-size: 1.8rem;
+      font-size: 1.2rem;
       margin-top: 0;
       margin-bottom: 25px;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
@@ -191,7 +195,7 @@ const Container = styled.div`
 
       p {
         color: rgba(139, 0, 0, 1);
-        font-size: 16px;
+        font-size: 12px;
         opacity: 1;
       }
     }
@@ -223,6 +227,12 @@ const Container = styled.div`
       &:active {
         background: rgba(255, 255, 255, 0.2);
       }
+    }
+    .Link {
+      font-size: 16px;
+      font-weight: 500;
+      color: blue;
+      color: #333;
     }
   }
   @media (max-width: 428px) {
@@ -309,7 +319,7 @@ const Container = styled.div`
       .userPassword,
       .userEmail {
         p {
-          font-size: 1.8rem;
+          font-size: 1rem;
           color: rgba(200, 0, 0, 1);
         }
       }

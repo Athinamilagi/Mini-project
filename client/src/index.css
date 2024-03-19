@@ -729,7 +729,7 @@ body {
   }
 
   #content nav form.show ~ .notification,
-  #content nav form.show ~ .profile {
+  #content nav form.show ~ #switch-mode {
     display: none;
   }
 
@@ -745,5 +745,26 @@ body {
   }
   #content main .table-data .todo .todo-list {
     min-width: 420px;
+  }
+}
+
+.add-user {
+  width: max-content;
+  height: max-content;
+  font-size: 16px;
+  font-weight: 500;
+  color: blue;
+  color: #333;
+  border-radius: 50px;
+  padding: 10px;
+  background-color: rgba(60, 145, 230, 0.5);
+
+  &:hover {
+    background-color: rgba(
+      60,
+      145,
+      230,
+      1
+    ); /* Adjust alpha value to increase opacity */
   }
 }
