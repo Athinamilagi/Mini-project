@@ -9,14 +9,19 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Game from "./components/Error";
 import Dashboard from "./components/Dashboard/dashboard";
+import Navbar from "./components/Dashboard/navbar";
+import Home from "./components/Home/Home";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromChildren(
       <>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Navbar />}>
+          <Route index element={<Dashboard />} />
+        </Route>
         <Route path="*" element={<Game />} />
       </>
     )
