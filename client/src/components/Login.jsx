@@ -138,7 +138,7 @@ const Container = styled.div`
       width: 300px;
       box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      height: 30px;
+      height: 50px;
       border: 1px solid white;
       border-radius: 10px;
       padding: 10px;
@@ -214,8 +214,13 @@ const Container = styled.div`
     .Link {
       font-size: 16px;
       font-weight: 500;
-      color:blue;
+      color: blue;
       color: #333;
+      a {
+        text-decoration: none;
+        font-weight: 200px;
+        font-size: 18px;
+      }
     }
   }
   @media (max-width: 428px) {
@@ -260,7 +265,7 @@ const Container = styled.div`
       }
     }
   }
-  @media screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     width: 100vw;
     height: 100vh;
     &::before {

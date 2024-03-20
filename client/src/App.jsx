@@ -11,26 +11,23 @@ import Game from "./components/Error";
 import Dashboard from "./components/Dashboard/dashboard";
 import Navbar from "./components/Dashboard/navbar";
 import Home from "./components/Home/Home";
+import About from "./components/Home/About";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromChildren(
       <>
         <Route path="/" element={<Home />} />
+        <Route path="*" element={<Game />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<Navbar />}>
           <Route index element={<Dashboard />} />
         </Route>
-        <Route path="*" element={<Game />} />
       </>
     )
   );
-  return (
-    <RouterProvider router={router}>
-      <Login />
-    </RouterProvider>
-  );
+  return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;

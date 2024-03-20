@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-
 const SignUp = () => {
   const [userData, setUserData] = useState({
     userName: "",
@@ -142,7 +141,7 @@ const Container = styled.div`
       font-weight: 500;
       color: #fff;
       opacity: 0.7;
-      font-size: 1.2rem;
+      font-size: 1.8rem;
       margin-top: 0;
       margin-bottom: 25px;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
@@ -150,10 +149,10 @@ const Container = styled.div`
 
     input {
       background: transparent;
-      width: 300px;
+      width: 250px;
       box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      height: 30px;
+      height: 50px;
       border: 1px solid white;
       border-radius: 10px;
       padding: 10px;
@@ -229,12 +228,18 @@ const Container = styled.div`
       }
     }
     .Link {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 500;
       color: blue;
       color: #333;
+      a {
+        text-decoration: none;
+        font-weight: 200px;
+        font-size: 18px;
+      }
     }
   }
+
   @media (max-width: 428px) {
     width: 100vw;
     height: 100vh;
@@ -260,24 +265,24 @@ const Container = styled.div`
         font-weight: 500;
         color: #fff;
         opacity: 0.7;
-        font-size: 0.5rem;
+        font-size: 1.4rem;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         margin-bottom: 14px;
       }
       input {
         width: 60vw;
-        height: 3vh;
+        height: 5vh;
         margin-bottom: 0;
       }
       [type="submit"] {
         width: 120px;
-        height: 60px;
+        height: 50px;
         padding: 8px;
         font-size: 1rem;
       }
     }
   }
-  @media screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     width: 100vw;
     height: 100vh;
     &::before {
@@ -296,8 +301,8 @@ const Container = styled.div`
     }
 
     form {
-      width: 80vw;
-      height: 60vh;
+      width: 60vw;
+      height: 75vh;
       p {
         font-weight: 500;
         color: #fff;
@@ -307,8 +312,8 @@ const Container = styled.div`
         margin-bottom: 44px;
       }
       input {
-        width: 60vw;
-        height: 4vh;
+        width: 40vw;
+        height: 8vh;
         margin-bottom: 0;
 
         &::placeholder {
