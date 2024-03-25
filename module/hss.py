@@ -1,60 +1,58 @@
 import cv2
+import numpy as np
+from facenet_pytorch import MTCNN, InceptionResnetV1
+import torch
 
-# Function to load the image from file
-def load_image(file_path):
-    return cv2.imread(file_path)
-
-
-# Function to compare images
-def compare_images(image1, image2):
-    # Resize the captured frame to match the size of the reference image
-    image2_resized = cv2.resize(image2, (image1.shape[1], image1.shape[0]))
-
-    # Convert images to grayscale
-    gray_image1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-    gray_image2 = cv2.cvtColor(image2_resized, cv2.COLOR_BGR2GRAY)
-
-    # Compute the absolute difference between the two images
-    diff = cv2.absdiff(gray_image1, gray_image2)
-
-    # Compute the mean squared error (MSE)
-    mse = (diff**2).mean()
-
-    return mse
+# Initialize FaceNet models
+mtcnn = MTCNN()
+resnet = InceptionResnetV1(pretrained="vggface2").eval()
 
 
-# Path to the folder containing the reference image
-reference_image_path = "./images/received_image.jpg"
+def authentication():
+    reference_image_path = "./images/received_image.jpg"
+    temp_image_path = "./temp_images/auth_image.jpg"
 
-# Load the reference image
-reference_image = load_image(reference_image_path)
+    # Load images
+    reference_image = cv2.imread(reference_image_path)
+    frame = cv2.imread(temp_image_path)
 
-# Initialize the webcam
-cap = cv2.VideoCapture(0)
+    # Resize images to the required dimensions
+    reference_image_resized = cv2.resize(reference_image, (160, 160))
+    frame_resized = cv2.resize(frame, (160, 160))
 
-authenticated = False
+    # Convert images to RGB format
+    reference_rgb = cv2.cvtColor(reference_image_resized, cv2.COLOR_BGR2RGB)
+    frame_rgb = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2RGB)
 
-# Capture frame-by-frame
-ret, frame = cap.read()
+    # Convert images to tensors
+    reference_tensor = (
+        torch.tensor(reference_rgb, dtype=torch.float32).permute(2, 0, 1).unsqueeze(0)
+    )
+    frame_tensor = (
+        torch.tensor(frame_rgb, dtype=torch.float32).permute(2, 0, 1).unsqueeze(0)
+    )
 
-# Compare the captured frame with the reference image
-mse = compare_images(reference_image, frame)
-print("MSE:", mse)
+    # Detect faces and extract facial embeddings using FaceNet
+    reference_faces = resnet(reference_tensor)
+    frame_faces = resnet(frame_tensor)
 
-# Display the captured frame
-cv2.imshow("Authentication", frame)
+    # Compute similarity score
+    similarity_score = torch.nn.functional.cosine_similarity(
+        reference_faces, frame_faces
+    )
 
-# If the MSE is below a certain threshold, consider it a match
-if mse < 115:  # Adjusted threshold value
-    print("User authenticated")
-    authenticated = True
-else:
-    print("User not authenticated")
+    # Print similarity score
+    print("Similarity Score:", similarity_score.item())
 
-# Release the capture
-cap.release()
-cv2.destroyAllWindows()
+    # Define threshold
+    threshold = 0.9  # Adjust as needed
 
-# Check if authentication failed due to timeout
-if not authenticated:
-    print("Authentication timeout. User not authenticated.")
+    # Check if similarity score exceeds threshold
+    authenticated = similarity_score.item() < threshold
+
+    if authenticated:
+        print("User authenticated")
+    else:
+        print("User not authenticated")
+
+    return authenticated
