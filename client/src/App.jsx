@@ -9,9 +9,8 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Game from "./components/Error";
 import Dashboard from "./components/Dashboard/dashboard";
-import Navbar from "./components/Dashboard/navbar";
+import Navbar, { loader } from "./components/Dashboard/navbar";
 import Home from "./components/Home/Home";
-import About from "./components/Home/About";
 
 function App() {
   const router = createBrowserRouter(
@@ -21,7 +20,7 @@ function App() {
         <Route path="*" element={<Game />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/dashboard" element={<Navbar />}>
+        <Route path="/dashboard" element={<Navbar />} loader={loader}>
           <Route index element={<Dashboard />} />
         </Route>
       </>

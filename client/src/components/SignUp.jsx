@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const SignUp = () => {
+  const [error, setErrors] = useState(null);
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     userName: "",
     userPassword: "",
@@ -21,27 +24,36 @@ const SignUp = () => {
     e.preventDefault();
     setIsSubmit(true);
     setFormErrors(validate(userData));
-    console.log("Sending request with:", userData);
-    axios
-      .post("http://localhost:3000/signup", {
-        userName: userData.userName,
-        userEmail: userData.userEmail,
-        userPassword: userData.userPassword,
-      })
-      .then((res) => {
-        console.log("Received response:", res.data);
-      })
-      .catch((error) => {
-        console.error("Error making request:", error);
-      });
-  };
-
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(userData);
+    if (Object.keys(formErrors).length === 0) {
+      console.log("Sending request with:", userData);
+      axios
+        .post("http://localhost:8080/signup", {
+          userName: userData.userName,
+          userEmail: userData.userEmail,
+          userPassword: userData.userPassword,
+        })
+        .then((res) => {
+          console.log("Received response:", res);
+          localStorage.setItem("loggedIn", "true");
+          navigate("/dashboard", { replace: "true" });
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your have been successfully Signed in",
+            showConfirmButton: true,
+            timer: 1500,
+          });
+        })
+        .catch((error) => {
+          setErrors(error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: error.response.data,
+          });
+        });
     }
-  }, [formErrors]);
-
+  };
   const validate = (values) => {
     const errors = {};
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -59,6 +71,11 @@ const SignUp = () => {
       errors.password = "Password is required";
     } else if (values.userPassword.length < 16) {
       errors.password = "Password must be more than 16 characters";
+    }
+    if (Object.keys(errors).length === 0) {
+      setIsSubmit(true);
+    } else {
+      setIsSubmit(false);
     }
     return errors;
   };
@@ -233,8 +250,9 @@ const Container = styled.div`
       color: blue;
       color: #333;
       a {
+        color: #fff;
         text-decoration: none;
-        font-weight: 200px;
+        font-weight: 600;
         font-size: 18px;
       }
     }

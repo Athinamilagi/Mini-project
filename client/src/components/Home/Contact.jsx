@@ -83,7 +83,7 @@ const Contact = () => {
                   style={{ height: "10rem" }}
                   data-sb-validations="required"
                 ></textarea>
-                <label for="message">Message</label>
+                <label htmlFor="message">Message</label>
                 <div
                   className="invalid-feedback"
                   data-sb-feedback="message:required"
@@ -98,7 +98,7 @@ const Contact = () => {
               </div>
               <div className="d-grid">
                 <button
-                  className="btn btn-primary btn-xl disabled"
+                  className="btn btn-primary btn-xl"
                   id="submitButton"
                   type="submit"
                 >

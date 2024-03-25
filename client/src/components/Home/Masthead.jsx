@@ -7,15 +7,16 @@ const Masthead = () => {
         <div className="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
           <div className="col-lg-8 align-self-end">
             <h1 className="text-white font-weight-bold">
-              Your Favorite Place for Free Bootstrap Themes
+              Enhance Your Security with Face Detection
             </h1>
             <hr className="divider" />
           </div>
           <div className="col-lg-8 align-self-baseline">
             <p className="text-white-75 mb-5">
-              Start Bootstrap can help you build better websites using the
-              Bootstrap framework! Just download a theme and start customizing,
-              no strings attached!
+              Secure your Home with cutting-edge face detection technology! Our
+              solution offers seamless integration and robust protection against
+              unauthorized access. Elevate your security measures and safeguard
+              your sensitive data with confidence.
             </p>
             <a className="btn btn-primary btn-xl" href="#about">
               Find Out More

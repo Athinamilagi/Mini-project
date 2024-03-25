@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Sidebar from "./sidebar";
 import WebcamCapture from "./webcamcapture";
-import { useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
 const Dashboard = () => {
   const [val, setVal] = useOutletContext();
@@ -15,21 +15,21 @@ const Dashboard = () => {
               <h1>Dashboard</h1>
               <ul className="breadcrumb">
                 <li>
-                  <a href="#">Dashboard</a>
+                  <Link to="/dashboard">Dashboard</Link>
                 </li>
                 <li>
                   <i className="bx bx-chevron-right"></i>
                 </li>
                 <li>
-                  <a className="active" href="#">
+                  <Link to="/home" className="active">
                     Home
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
         </main>
-        {val && <WebcamCapture />}
+        {val && <WebcamCapture val={setVal} />}
       </section>
     </>
   );

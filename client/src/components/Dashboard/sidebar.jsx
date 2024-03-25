@@ -1,14 +1,37 @@
+// Sidebar.js
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const [val, setVal] = useState(true);
+  const navigate = useNavigate();
+  const [val, setVal] = useState(false);
+
   const toggleSidebar = () => {
     setVal(!val);
   };
+  const handleLogOut = () => {
+    localStorage.setItem("loggedIn", false);
+    navigate("/", { replace: true });
+    Swal.fire({
+      icon: "success",
+      title: "Logged Out",
+      text: "You have been logged out successfully",
+    });
+  };
+
   return (
-    <section id="sidebar" className={val ? "" : "hide"}>
+    <section
+      id="sidebar"
+      className={localStorage.getItem("loggedIn") ? "" : "hide"}
+    >
       <i
-        className={val ? "bx bx-menu menu" : "bx bx-menu hide"}
+        className={
+          localStorage.getItem("loggedIn")
+            ? "bx bx-menu menu"
+            : "bx bx-menu hide"
+        }
         onClick={toggleSidebar}
       ></i>
       <a href="#" className="brand">
@@ -18,10 +41,10 @@ const Sidebar = () => {
       <ul className="side-menu top">
         {menuItems.map((menuItem, index) => (
           <li key={index}>
-            <a href="#">
+            <Link to={"/"+ menuItem.text}>
               <i className={`bx ${menuItem.icon}`}></i>
               <span className="text">{menuItem.text}</span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
@@ -32,8 +55,8 @@ const Sidebar = () => {
             <span className="text">Settings</span>
           </a>
         </li>
-        <li>
-          <a href="#" className="logout">
+        <li onClick={handleLogOut}>
+          <a className="logout">
             <i className="bx bxs-log-out-circle"></i>
             <span className="text">Logout</span>
           </a>
@@ -43,13 +66,12 @@ const Sidebar = () => {
   );
 };
 
-// Define menu items as an array of objects with text and icon properties
 const menuItems = [
-  { text: "Dashboard", icon: "bxs-dashboard" },
-  { text: "My Store", icon: "bxs-shopping-bag-alt" },
-  { text: "Log", icon: "bxs-doughnut-chart" },
-  { text: "Alert", icon: "bxs-message-dots" },
-  { text: "Members", icon: "bxs-group" },
+  { text: "dashboard", icon: "bxs-dashboard" },
+  { text: "my store", icon: "bxs-shopping-bag-alt" },
+  { text: "log", icon: "bxs-doughnut-chart" },
+  { text: "alert", icon: "bxs-message-dots" },
+  { text: "members", icon: "bxs-group" },
 ];
 
 export default Sidebar;

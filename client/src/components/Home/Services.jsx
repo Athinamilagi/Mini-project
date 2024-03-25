@@ -10,7 +10,7 @@ const Services = () => {
           <div className="col-lg-3 col-md-6 text-center">
             <div className="mt-5">
               <div className="mb-2">
-                <i className="bi-gem fs-1 text-primary"></i>
+                <i className="bi-gem fs-1 text-service"></i>
               </div>
               <h3 className="h4 mb-2">Sturdy Themes</h3>
               <p className="text-muted mb-0">
@@ -21,7 +21,7 @@ const Services = () => {
           <div className="col-lg-3 col-md-6 text-center">
             <div className="mt-5">
               <div className="mb-2">
-                <i className="bi-laptop fs-1 text-primary"></i>
+                <i className="bi-laptop fs-1 text-service"></i>
               </div>
               <h3 className="h4 mb-2">Up to Date</h3>
               <p className="text-muted mb-0">
@@ -32,7 +32,7 @@ const Services = () => {
           <div className="col-lg-3 col-md-6 text-center">
             <div className="mt-5">
               <div className="mb-2">
-                <i className="bi-globe fs-1 text-primary"></i>
+                <i className="bi-globe fs-1 text-service"></i>
               </div>
               <h3 className="h4 mb-2">Ready to Publish</h3>
               <p className="text-muted mb-0">
@@ -43,7 +43,7 @@ const Services = () => {
           <div className="col-lg-3 col-md-6 text-center">
             <div className="mt-5">
               <div className="mb-2">
-                <i className="bi-heart fs-1 text-primary"></i>
+                <i className="bi-heart fs-1 text-service"></i>
               </div>
               <h3 className="h4 mb-2">Made with Love</h3>
               <p className="text-muted mb-0">

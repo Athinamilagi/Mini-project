@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import Swal from "sweetalert2";
 import axios from "axios";
+import WebcamCapture from "./Dashboard/webcamcapture";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     userPassword: "",
     userEmail: "",
   });
+  const [showWebCam, setShowWebCam] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
+  const handleForgotPassword = () => {
+    setShowWebCam((prevEle) => !prevEle);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
@@ -20,27 +27,31 @@ const Login = () => {
     e.preventDefault();
     setIsSubmit(true);
     setFormErrors(validate(userData));
-    console.log("Sending request with:", userData);
     axios
-      .post("http://localhost:3000/login", {
-        userName: userData.userName,
+      .post("http://localhost:8080/login", {
         userEmail: userData.userEmail,
         userPassword: userData.userPassword,
       })
       .then((res) => {
-        console.log("Received response:", res.data);
+        localStorage.setItem("loggedIn", true);
+        navigate("/dashboard", { replace: "true" });
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your have been successfully Logged in",
+          showConfirmButton: true,
+          timer: 1500,
+        });
       })
       .catch((error) => {
         console.error("Error making request:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data,
+        });
       });
   };
-
-  useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(userData);
-    }
-  }, [formErrors]);
 
   const validate = (values) => {
     const errors = {};
@@ -55,8 +66,12 @@ const Login = () => {
     } else if (values.userPassword.length < 16) {
       errors.userPassword = "Password must be more than 16 characters";
     }
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(userData);
+    }
     return errors;
   };
+
   return (
     <Container>
       <form onSubmit={handleSubmit} className="form">
@@ -81,9 +96,19 @@ const Login = () => {
         </div>
         <button type="submit">Sign In</button>
         <div className="Link">
-          Are U new around ? <Link to="/signup">Go here</Link>.
+          <div className=" login">
+            <Link onClick={handleForgotPassword}>Forgot Password ?</Link>.
+          </div>
+          <div className="signup">
+            <Link to="/signup"> Are U new around ?</Link>.
+          </div>
         </div>
       </form>
+      {showWebCam && (
+        <FaceAuth>
+          <WebcamCapture logVal={setShowWebCam} name={"log"}/>
+        </FaceAuth>
+      )}
     </Container>
   );
 };
@@ -212,14 +237,27 @@ const Container = styled.div`
       }
     }
     .Link {
-      font-size: 16px;
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      align-items: center;
       font-weight: 500;
-      color: blue;
-      color: #333;
       a {
+        font-size: 16px;
+        color: #fff;
         text-decoration: none;
-        font-weight: 200px;
-        font-size: 18px;
+        font-weight: 600;
+        &:hover {
+          cursor: pointer;
+          background: black;
+          color: rgba(255, 255, 255, 1);
+          border-radius: 10px;
+          padding: 10px;
+        }
+
+        &:active {
+          background: rgba(255, 255, 255, 0.2);
+        }
       }
     }
   }
@@ -285,7 +323,7 @@ const Container = styled.div`
 
     form {
       width: 80vw;
-      height: 60vh;
+      height: 80vh;
       p {
         font-weight: 500;
         color: #fff;
@@ -296,7 +334,7 @@ const Container = styled.div`
       }
       input {
         width: 60vw;
-        height: 4vh;
+        height: 8vh;
         margin-bottom: 0;
 
         &::placeholder {
@@ -307,7 +345,7 @@ const Container = styled.div`
       .userPassword,
       .userEmail {
         p {
-          font-size: 1.8rem;
+          font-size: 1.2rem;
           color: rgba(200, 0, 0, 1);
         }
       }
@@ -319,4 +357,8 @@ const Container = styled.div`
       }
     }
   }
+`;
+
+const FaceAuth = styled.div`
+  position: absolute;
 `;
